@@ -50,7 +50,9 @@ traverse/
 
 ## Branching
 
-- Never commit directly to `main`. If on `main`, create a feature branch before making changes.
+- Never commit directly to `main` or `dev`. If on either, create a feature branch before making changes.
+- Feature branches merge to `dev` only. `dev` merges to `main`. No direct feature-to-main merges.
+- Pushing to `dev` deploys to the Railway dev environment. Pushing to `main` deploys to production.
 
 ## Code Style
 

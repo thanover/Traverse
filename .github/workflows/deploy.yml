@@ -2,9 +2,9 @@ name: CI / Deploy
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
-    branches: [main]
+    branches: [main, dev]
 
 jobs:
   ci:
@@ -28,8 +28,25 @@ jobs:
       - name: Build
         run: pnpm build
 
-  deploy:
-    name: Deploy to Railway
+  deploy-dev:
+    name: Deploy to Railway (dev)
+    needs: ci
+    if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy
+        run: railway up --service traverse --detach
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_DEV }}
+          RAILWAY_PROJECT_ID: f3cd790c-d89e-4d6e-b349-593c4130b275
+
+  deploy-prod:
+    name: Deploy to Railway (prod)
     needs: ci
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
