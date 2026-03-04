@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Stage {
+  id           String        @id
+  label        String
+  color        String
+  environments Environment[]
+}
+
+model System {
+  id           String        @id
+  name         String
+  subtitle     String
+  order        Int           @default(0)
+  environments Environment[]
+}
+
+model Environment {
+  id               String        @id
+  label            String
+  system           System        @relation(fields: [systemId], references: [id], onDelete: Cascade)
+  systemId         String
+  stage            Stage         @relation(fields: [stageId], references: [id])
+  stageId          String
+  integrationsFrom Integration[] @relation("IntegrationFrom")
+  integrationsTo   Integration[] @relation("IntegrationTo")
+}
+
+model Integration {
+  id     String        @id @default(cuid())
+  from   Environment   @relation("IntegrationFrom", fields: [fromId], references: [id], onDelete: Cascade)
+  fromId String
+  to     Environment   @relation("IntegrationTo", fields: [toId], references: [id], onDelete: Cascade)
+  toId   String
+  flows  Flow[]
+}
+
+model Flow {
+  id           String        @id
+  label        String
+  icon         String
+  color        String
+  systemIds    String[]
+  integrations Integration[]
+}
