@@ -48,6 +48,10 @@ traverse/
 └── package.json
 ```
 
+## Branching
+
+- Never commit directly to `main`. If on `main`, create a feature branch before making changes.
+
 ## Code Style
 
 - Functional components only, no classes
