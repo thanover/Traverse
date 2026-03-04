@@ -42,5 +42,5 @@ jobs:
       - name: Deploy
         run: railway up --service traverse --detach
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_PROD }}
           RAILWAY_PROJECT_ID: f3cd790c-d89e-4d6e-b349-593c4130b275
