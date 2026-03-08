@@ -1,4 +1,4 @@
-import type { Stage, System, Integration, Flow } from "../types";
+import type { Stage, System, Integration, Flow } from "../lib/types";
 
 export const STAGES: Stage[] = [
   { id: "dev", label: "Dev", color: "#818cf8" },
